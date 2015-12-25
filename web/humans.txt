@@ -1,0 +1,14 @@
+/* TEAM */
+Your title: Name
+Site: email
+Twitter:
+Location: Austin, TX, USA
+							
+/* THANKS */
+Name:
+
+/* SITE */
+Last update: 12/22/2015
+Standards: HTML5, CSS3, SASS, 
+Components: Modernizr, jQuery, Bootstrap, Gulp, Bower, FontAwesome
+Software: C9.io, PHPStorm

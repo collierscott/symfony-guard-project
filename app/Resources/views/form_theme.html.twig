@@ -1,0 +1,47 @@
+{% use 'form_div_layout.html.twig' with form_label as base_form_label %}
+
+{% block form_row %}
+    <div class="form-group {{ errors|length > 0 ? 'has-error' : '' }}">
+        {{ form_label(form) }}
+        {{ form_errors(form) }}
+        {{ form_widget(form) }}
+
+        {% if help is defined and help %}
+            <div class="help-block">{{ help }}</div>
+        {% endif %}
+    </div>
+{% endblock form_row %}
+
+{% block form_errors %}
+    {% if errors|length > 0 %}
+    <ul class="help-block">
+        {% for error in errors %}
+            <li>{{ error.message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+{% endblock form_errors %}
+
+{% block form_widget %}
+	{% spaceless %}
+	    {% if compound %}
+	        {{ block('form_widget_compound') }}
+	    {% else %}
+	        {{ block('form_widget_simple') }}
+	    {% endif %}
+	{% endspaceless %}
+{% endblock form_widget %}
+
+{% block form_widget_simple %}
+    {% spaceless %}
+        {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' form-control')|trim }) %}
+        {% set type = type|default('text') %}
+        <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+    {% endspaceless %}
+{% endblock form_widget_simple %}
+
+{% block form_label %}
+    {% set label_attr = attr|merge({ 'class': (attr.class|default('') ~ ' control-label')|trim }) %}
+
+    {{ block('base_form_label') }}
+{% endblock form_label %}

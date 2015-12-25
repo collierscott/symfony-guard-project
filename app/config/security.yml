@@ -1,0 +1,58 @@
+# To get started with security, check out the documentation:
+# http://symfony.com/doc/current/book/security.html
+security:
+    encoders:
+        AppBundle\Entity\User: 
+            algorithm: bcrypt
+            
+    # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
+    providers:
+
+        # os_db_users:
+        #   entity:
+        #       class: AppBundle:User
+        main_provider:
+            id: user_provider
+
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        main:
+            anonymous: ~
+            # activate different ways to authenticate
+
+            #http_basic: ~
+            # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
+            remember_me:
+                 secret: "%secret%"
+                 
+            provider: main_provider
+                 
+            form_login:
+                login_path: /login
+                check_path: /login_check
+                #use_referer: true
+                csrf_token_generator: security.csrf.token_manager
+                default_target_path: /
+                
+            logout:
+                path: /logout
+                target: /login
+                
+            guard:
+                authenticators:
+                    - form_login_authenticator
+                entry_point: form_login_authenticator
+                
+    # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+    access_control:
+        # symfony starts at the top and stops at first match
+        # The ^ means that urls beginning with the pattern will be matched
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^^/(css|js), roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        # require ROLE_ADMIN for /admin*
+        - { path: ^/admin, roles: ROLE_ADMIN }

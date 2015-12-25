@@ -1,0 +1,29 @@
+{
+  "name": "onlinespaces-bootstrap",
+  "description": "A bootstrap for Onlinespaces projects",
+  "main": "index.js",
+  "authors": [
+    "Scott Collier <scott@onlinespaces.com>"
+  ],
+  "license": "SEE LICENSE IN license.txt",
+  "keywords": [
+    "onlinespaces",
+    "bootstrap",
+    "project"
+  ],
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "1.11.*",
+    "bootstrap": "3.3.*",
+    "font-awesome": "4.5.*",
+    "normalize-css": "normalize.css#~3.0.3"
+  }
+}

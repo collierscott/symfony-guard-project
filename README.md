@@ -1,0 +1,1 @@
+Symfony 3 using guard authentication
