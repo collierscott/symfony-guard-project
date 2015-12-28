@@ -8,11 +8,9 @@ security:
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
 
-        # os_db_users:
-        #   entity:
-        #       class: AppBundle:User
-        main_provider:
-            id: user_provider
+        os_db_users:
+          entity:
+              class: AppBundle:User
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -28,15 +26,6 @@ security:
             # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
             remember_me:
                  secret: "%secret%"
-                 
-            provider: main_provider
-                 
-            form_login:
-                login_path: /login
-                check_path: /login_check
-                #use_referer: true
-                csrf_token_generator: security.csrf.token_manager
-                default_target_path: /
                 
             logout:
                 path: /logout
