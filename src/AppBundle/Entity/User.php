@@ -235,7 +235,7 @@ class User implements AdvancedUserInterface, Serializable
     
     public function eraseCredentials()
     {
-        $this->setPlainPassword(null);
+        $this->plainPassword = null;
     }
     
     public function isAccountNonExpired()
