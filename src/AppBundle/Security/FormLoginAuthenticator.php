@@ -76,9 +76,7 @@ class FormLoginAuthenticator extends AbstractGuardAuthenticator
             ->getRepository('AppBundle:User');
             
             $user =  $userRepo->loadUserByUsername($username);
-            // var_dump($user);
-            // die;
-            
+
         return $user;
         
     }
@@ -94,19 +92,11 @@ class FormLoginAuthenticator extends AbstractGuardAuthenticator
         
         $encoder = $this->container->get('security.password_encoder');
         
-        // echo $plainPassword . ' ' . $encoder->isPasswordValid($user, $plainPassword);
-        // var_dump($user);
-        // die;
-        
         if (!$encoder->isPasswordValid($user, $plainPassword)) {
             // throw any AuthenticationException
             throw new BadCredentialsException();
         }
         
-        // echo $plainPassword . ' ' . $encoder->isPasswordValid($user, $plainPassword);
-        // var_dump($user);
-        // die;
-
         // return true to make authentication successful
         return true;
         
@@ -128,14 +118,8 @@ class FormLoginAuthenticator extends AbstractGuardAuthenticator
      * RedirectResponse to the last page they visited)
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey){
-        // echo "SUCCESS";
-        // var_dump($request);
-        // die;
-        // on success, let the request continue
-        //return null;
         $url = $this->router->generate('homepage');
         return new RedirectResponse($url);
-
     }
 
     /**
