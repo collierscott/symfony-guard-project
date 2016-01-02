@@ -27,3 +27,7 @@ services:
     app_api_token_authenticator:
         class: AppBundle\Security\ApiTokenAuthenticator
         arguments: ["@service_container"]
+        
+    app_facebook_authenticator:
+        class: AppBundle\Security\FacebookAuthenticator
+        arguments: ["@service_container", "%facebook_app_id%", "%facebook_app_secret%", "@router"]
