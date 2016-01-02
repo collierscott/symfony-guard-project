@@ -53,6 +53,10 @@ class UserListener
 	    $roles = $user->getRoles();
 	    $user->setRoles($roles);
 	    
+	    //Make sure that a user has at least the role of ROLE_USER when created
+	    $roles = $user->getRoles();
+	    $user->setRoles($roles);
+	    
 	}
     
 }
