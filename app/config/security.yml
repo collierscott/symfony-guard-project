@@ -8,7 +8,7 @@ security:
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
 
-        os_db_users:
+        user_provider:
           entity:
               class: AppBundle:User
 
@@ -26,6 +26,8 @@ security:
             # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
             remember_me:
                  secret: "%secret%"
+                 
+            provider:  user_provider
                 
             logout:
                 path: /logout
@@ -33,8 +35,9 @@ security:
                 
             guard:
                 authenticators:
-                    - form_login_authenticator
-                entry_point: form_login_authenticator
+                    - app_form_login_authenticator
+                    
+                entry_point: app_form_login_authenticator
                 
     # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
     access_control:

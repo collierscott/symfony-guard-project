@@ -40,7 +40,7 @@ class RegistrationController extends Controller
             $guardHandler->authenticateUserAndHandleSuccess(
                 $user,
                 $request,
-                $this->get('form_login_authenticator'),
+                $this->get('app_form_login_authenticator'),
                 'main'
                 );
              

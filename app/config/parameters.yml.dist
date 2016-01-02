@@ -17,3 +17,10 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
+
+    #Google Site Id
+    google_site_id: UA-XXXXX-X
+    
+    #Facebook app information
+    facebook_app_id:  XXXXX
+    facebook_app_secret: XXXXX

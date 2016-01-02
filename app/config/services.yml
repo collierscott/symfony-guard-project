@@ -20,6 +20,6 @@ services:
         tags:
             - { name: twig.extension }
     
-    form_login_authenticator:
+    app_form_login_authenticator:
         class: AppBundle\Security\FormLoginAuthenticator
         arguments: ["@service_container", "@router"]
