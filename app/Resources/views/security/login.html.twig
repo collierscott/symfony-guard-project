@@ -45,7 +45,9 @@
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
             <a class="btn btn-primary" href="{{ path('logout') }}">Logout</a>
         {% else %}
-            <button type="submit" class="btn btn-primary">Login</button>
+            <a class="btn btn-primary pull-right" href="{{ path('login_action') }}">Login</a>
+            <a class="btn btn-primary pull-right" href="{{ path('connect_facebook') }}">Login with Facebook</a>
+            <a class="btn btn-primary pull-right" href="{{ path('user_register') }}">Register</a>
         {% endif %}
     </div>
 </form>

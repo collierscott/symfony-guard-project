@@ -108,7 +108,7 @@ class FormLoginAuthenticator extends AbstractGuardAuthenticator
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception){
         
         $request->getSession()->set(Security::AUTHENTICATION_ERROR, $exception);
-        $url = $this->router->generate('login_route');
+        $url = $this->router->generate('login_action');
         return new RedirectResponse($url);
         
     }
@@ -127,7 +127,7 @@ class FormLoginAuthenticator extends AbstractGuardAuthenticator
      */
     public function start(Request $request, AuthenticationException $authException = null)
     {
-        $url = $this->router->generate('login_route');
+        $url = $this->router->generate('login_action');
         return new RedirectResponse($url);
     }
     
@@ -138,17 +138,7 @@ class FormLoginAuthenticator extends AbstractGuardAuthenticator
      */
     public function supportsRememberMe()
     {
-        return false;
+        return true;
     }
-    
-    // protected function getDefaultSuccessRedirectUrl()
-    // {
-    //     return $this->router->generate('homepage');
-    // }
-    
-    // protected function getLoginUrl()
-    // {
-    //     return $this->router->generate('login_route');
-    // }
     
 }
