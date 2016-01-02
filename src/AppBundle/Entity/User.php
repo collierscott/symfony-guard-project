@@ -57,6 +57,11 @@ class User implements AdvancedUserInterface, Serializable
      * @ORM\Column(type="string", length=60, unique=true, nullable=true)
      */
      private $apiToken;
+     
+     /**
+     * @ORM\Column(name="facebookId", type="string", length=25, unique=true, nullable=true)
+     */
+    private $facebookId;
 
     /**
      * @var bool
@@ -185,6 +190,25 @@ class User implements AdvancedUserInterface, Serializable
     public function setApiToken($apiToken)
     {
         $this->apiToken = $apiToken;
+    }
+    
+    /**
+     * Get Facebook Id
+     * @return string
+     */
+    public function getFacebookId()
+    {
+        return $this->facebookId;
+    }
+    
+    /**
+     * Set Facebook Id
+     * @param string id
+     */
+    public function setFacebookId($id)
+    {
+        
+        $this->facebookId = $id;
     }
 
     /**
