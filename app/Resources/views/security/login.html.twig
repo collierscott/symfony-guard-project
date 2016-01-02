@@ -51,7 +51,4 @@
         {% endif %}
     </div>
 </form>
-{% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-    <a class="btn btn-primary pull-right" href="{{ path('user_register') }}">Register</a>
-{% endif %}
 {% endblock %}
