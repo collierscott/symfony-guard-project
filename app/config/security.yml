@@ -36,6 +36,7 @@ security:
             guard:
                 authenticators:
                     - app_form_login_authenticator
+                    - app_api_token_authenticator
                     
                 entry_point: app_form_login_authenticator
                 

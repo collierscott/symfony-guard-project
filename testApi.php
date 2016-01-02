@@ -4,7 +4,7 @@ require __DIR__.'/vendor/autoload.php';
 
 $client = new GuzzleHttp\Client();
 
-$res = $client->get('localhost:8000/secure', [
+$res = $client->get('http://localhost:8000/secure', [
     'allow_redirects' => false,
     'http_errors' => false,
     'headers' => [

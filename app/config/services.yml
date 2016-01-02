@@ -23,3 +23,7 @@ services:
     app_form_login_authenticator:
         class: AppBundle\Security\FormLoginAuthenticator
         arguments: ["@service_container", "@router"]
+        
+    app_api_token_authenticator:
+        class: AppBundle\Security\ApiTokenAuthenticator
+        arguments: ["@service_container"]
