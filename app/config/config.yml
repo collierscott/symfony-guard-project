@@ -39,7 +39,9 @@ twig:
     strict_variables: "%kernel.debug%"
     form_themes:
         - "::form_theme.html.twig"
-
+    globals:
+        facebook_app_id: "%facebook_app_id%"
+        google_site_id: "%google_site_id%"
 
 # Doctrine Configuration
 doctrine:
