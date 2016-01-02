@@ -29,8 +29,6 @@ class UserListener
 
 	    $entity = $args->getEntity();
 		
-		//var_dump($entity);
-
 	    if ($entity instanceof User) {
 	        $this->handleEvent($entity);
 	    }
@@ -50,6 +48,10 @@ class UserListener
 	    $password = $encoder->encodePassword($plainPassword, $user->getSalt());
 
 	    $user->setPassword($password);
+	    
+	    //Make sure that a user has at least the role of ROLE_USER when created
+	    $roles = $user->getRoles();
+	    $user->setRoles($roles);
 	    
 	}
     
