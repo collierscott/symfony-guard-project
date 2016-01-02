@@ -9,7 +9,7 @@ $res = $client->get('localhost:8000/secure', [
     'http_errors' => false,
     'headers' => [
         // token for user scott
-        'X-AUTH-TOKEN' => 'DkE3KWIXPt6bnzZl6lcTt682WLhWYnLYjTeNyiZqgPJiHoEkjTtx03ECCnWP'
+        'X-AUTH-TOKEN' => 'DkE3KWIXPt6bnzZl6lcTt682WLhWYnLYjTeNyiZqgPJiHoEkjTtx03ECCnW1'
     ]
 ]);
 

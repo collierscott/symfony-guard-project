@@ -52,6 +52,11 @@ class User implements AdvancedUserInterface, Serializable
      * @Assert\Email
      */
     private $email;
+    
+    /**
+     * @ORM\Column(type="string", length=60, unique=true, nullable=true)
+     */
+     private $apiToken;
 
     /**
      * @var bool
@@ -170,6 +175,17 @@ class User implements AdvancedUserInterface, Serializable
 
         return $this;
     }
+    
+    /**
+     * Set token
+     *
+     * @param string $token
+     *
+     */
+    public function setApiToken($apiToken)
+    {
+        $this->apiToken = $apiToken;
+    }
 
     /**
      * Get email
@@ -276,7 +292,8 @@ class User implements AdvancedUserInterface, Serializable
             $this->id,
             $this->username,
             $this->password,
-            $this->isActive
+            $this->isActive,
+            $this->apiToken
         ));
     }
 
@@ -287,7 +304,8 @@ class User implements AdvancedUserInterface, Serializable
             $this->id,
             $this->username,
             $this->password,
-            $this->isActive
+            $this->isActive,
+            $this->apiToken
         ) = unserialize($serialized);
     }
     

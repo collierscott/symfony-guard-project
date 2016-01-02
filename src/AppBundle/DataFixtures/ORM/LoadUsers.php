@@ -27,6 +27,7 @@ class LoadUsers implements FixtureInterface, ContainerAwareInterface, OrderedFix
         $admin->setUsername('scott');
         //$admin->setPassword($this->encodePassword($admin, 'karenpass'));
         $admin->setPlainPassword('scottpass');
+        $admin->setApiToken('DkE3KWIXPt6bnzZl6lcTt682WLhWYnLYjTeNyiZqgPJiHoEkjTtx03ECCnW1');
         $admin->setRoles(array('ROLE_ADMIN'));
         $admin->setEmail('scott@onlinespaces.com');
         $manager->persist($admin);
