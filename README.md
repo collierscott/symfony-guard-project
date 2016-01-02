@@ -1,6 +1,8 @@
 Symfony 3 using guard authentication
 ====================================
 
+A basic implementation of form, Facebook, and API authentication in Symfony3 using Guard.
+
 To get running after downloading repo:
 --------------------------------------
 
