@@ -15,7 +15,9 @@ class FacebookController extends Controller
      */
     public function connectFacebookAction(Request $request)
     {
-        return $this->get('app_facebook_authenticator')->start($request);
+       
+        $provider = $this->get('app_facebook_authenticator')->start($request);
+        return $provider;
     }
     
     /**
