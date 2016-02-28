@@ -3,7 +3,7 @@ Symfony 3 using guard authentication
 
 A basic implementation of form, Facebook, and API authentication in Symfony3 using Guard.
 
-** If you are new to Symfony or just want some awesome training, checkout [KNP University](http://www.knpuniversity.com). It is well worth the time and money. And, they are super knowledgeable and helpful. **
+**If you are new to Symfony or just want some awesome training, checkout [KNP University](http://www.knpuniversity.com). It is well worth the time and money. And, they are super knowledgeable and helpful.**
 
 
 ** Also, if you find this useful and need some web hosting, checkout http://www.onlinespaces.com.
