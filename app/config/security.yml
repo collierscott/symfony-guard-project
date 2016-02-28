@@ -38,6 +38,7 @@ security:
                     - app_form_login_authenticator
                     - app_api_token_authenticator
                     - app_facebook_authenticator
+                    - app_google_authenticator
                     
                 entry_point: app_form_login_authenticator
                 
@@ -48,5 +49,6 @@ security:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^^/(css|js), roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        
         # require ROLE_ADMIN for /admin*
         - { path: ^/admin, roles: ROLE_ADMIN }

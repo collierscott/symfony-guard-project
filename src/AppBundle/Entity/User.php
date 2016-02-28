@@ -21,9 +21,9 @@ class User implements AdvancedUserInterface, Serializable
     }
     
     /**
-     * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
      */
     private $id;
 
@@ -33,7 +33,7 @@ class User implements AdvancedUserInterface, Serializable
     private $username;
     
     /**
-     * @ORM\Column(name="password", type="string", length=255)
+     * @ORM\Column(name="password", type="string", length=60)
      */
     private $password;
     
@@ -54,15 +54,54 @@ class User implements AdvancedUserInterface, Serializable
     private $email;
     
     /**
-     * @ORM\Column(type="string", length=60, unique=true, nullable=true)
+     * @ORM\Column(name="first_name", type="string", length=80, nullable=true)
      */
-     private $apiToken;
+    private $firstname;
      
      /**
+     * @ORM\Column(name="last_name", type="string", length=80, nullable=true)
+     */
+    private $lastname;
+    
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $gender;
+    
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $locale;
+    
+    /**
+     * @ORM\Column(type="string", length=60, unique=true, nullable=true)
+     */
+    private $apiToken;
+    
+    /**
      * @ORM\Column(name="facebookId", type="string", length=25, unique=true, nullable=true)
      */
     private $facebookId;
-
+    
+    /**
+     * @var string $facebookName
+     * 
+     * @ORM\Column(name="facebook_name", type="string", length=255, nullable=true)
+     */
+    private $facebookName;
+    
+    /**
+     * @var string $googleId
+     * 
+     * @ORM\Column(name="googleId", type="string", length=25, unique=true, nullable=true)
+     */
+    private $googleId;
+    
+    /**
+     * @ORM\Column(name="google_display_name", type="string", length=255, nullable=true)
+     */
+    private $googleDisplayName;
+    
     /**
      * @var bool
      * 
@@ -76,16 +115,27 @@ class User implements AdvancedUserInterface, Serializable
     private $roles = array();
     
     /**
+     * @var \DateTime $createdAt
+     * 
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
     
     /**
+     * @var \DateTime $updatedAt
+     * 
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime")
      */
     private $updatedAt;
+    
+    /**
+     * @var \DateTime $lastLogin
+     * 
+     * @ORM\Column(type="datetime")
+     */
+    private $lastLogin;
 
     /**
      * Get id
@@ -101,7 +151,7 @@ class User implements AdvancedUserInterface, Serializable
      * Set username
      *
      * @param string $username
-     *
+     * 
      * @return User
      */
     public function setUsername($username)
@@ -180,6 +230,110 @@ class User implements AdvancedUserInterface, Serializable
 
         return $this;
     }
+
+    /**
+     * Get email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+    
+    /**
+     * Set firstname
+     *
+     * @param string $firstname
+     *
+     * @return User
+     */
+    public function setFirstname($firstname)
+    {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    /**
+     * Get firstname
+     *
+     * @return string
+     */
+    public function getFirstname()
+    {
+        return $this->firstname;
+    }
+    
+    /**
+     * Set lastname
+     *
+     * @param string $lastname
+     *
+     * @return User
+     */
+    public function setLastname($lastname)
+    {
+        $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    /**
+     * Get lastname
+     *
+     * @return string
+     */
+    public function getLastname()
+    {
+        return $this->lastname;
+    }
+    
+    /**
+     * Set Locale
+     * 
+     * @param string $locale
+     * 
+     * @return User
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
+        return $this;
+    }
+    
+    /**
+     * Get Locale
+     * 
+     * @return string
+     */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+    
+    /**
+     * Set Gender
+     * 
+     * @param string $gender
+     * 
+     * @return User
+     */
+    public function setGender($gender)
+    {
+        $this->gender = $gender;
+        return $this;
+    }
+    
+    /**
+     * Get Gender
+     * 
+     * @return string
+     */
+    public function getGender()
+    {
+        return $this->gender;
+    }
     
     /**
      * Set token
@@ -192,15 +346,7 @@ class User implements AdvancedUserInterface, Serializable
         $this->apiToken = $apiToken;
     }
     
-    /**
-     * Get Facebook Id
-     * @return string
-     */
-    public function getFacebookId()
-    {
-        return $this->facebookId;
-    }
-    
+        
     /**
      * Set Facebook Id
      * @param string id
@@ -210,15 +356,77 @@ class User implements AdvancedUserInterface, Serializable
         
         $this->facebookId = $id;
     }
-
+    
     /**
-     * Get email
-     *
+     * Get Facebook Id
+     * 
      * @return string
      */
-    public function getEmail()
+    public function getFacebookId()
     {
-        return $this->email;
+        return $this->facebookId;
+    }
+    
+    /**
+     * Set Facebook Name
+     * @param string name
+     */
+    public function setFacebookName($name) 
+    {
+        $this->facebookName = $name;
+    }
+    
+    /**
+     * Get Facebook Name
+     * 
+     * @return string
+     */
+     public function getFacebookName()
+     {
+         return $this->facebookName;
+     }
+    
+    /**
+     * Set Google Id
+     * 
+     * @param string id
+     */
+    public function setGoogleId($id)
+    {
+        
+        $this->googleId = $id;
+    }
+    
+    /**
+     * Get Google Id
+     * 
+     * @return string
+     */
+    public function getGoogleId()
+    {
+        return $this->googleId;
+    }
+    
+    /**
+     * Set Google Display Name
+     * 
+     * @param string name
+     */
+    public function setGoogleDisplayName($name)
+    {
+        
+        $this->googleDisplayName = $name;
+        
+    }
+    
+    /**
+     * Get Google Display Name
+     * 
+     * @return string
+     */
+    public function getGoogleDisplayName()
+    {
+        return $this->googleDisplayName;
     }
     
     /**
@@ -232,7 +440,7 @@ class User implements AdvancedUserInterface, Serializable
     {
         $this->isActive = $isActive;
     }
-
+    
     /**
      * Get isActive
      *
@@ -307,6 +515,26 @@ class User implements AdvancedUserInterface, Serializable
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+    
+    /**
+     * Set Last Login
+     * 
+     * @param \DateTime $login
+     */
+    public function setLastLogin($login)
+    {
+        $this->lastLogin = $login;
+    }
+    
+    /**
+     * Get Last Login
+     * 
+     * @return \DateTime
+     */
+    public function getLastLogin()
+    {
+        return $this->lastLogin;
     }
     
     /** @see \Serializable::serialize() */

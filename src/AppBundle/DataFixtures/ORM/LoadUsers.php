@@ -20,16 +20,21 @@ class LoadUsers implements FixtureInterface, ContainerAwareInterface, OrderedFix
         $user->setUsername('karen');
         //$user->setPassword($this->encodePassword($user, 'karenpass'));
         $user->setPlainPassword('karenpass');
+        $user->setApiToken('123abc');
+        $user->setLocale('en_US');
         $user->setEmail('karen@onlinespaces.com');
+        $user->setLastLogin(new \DateTime());
         $manager->persist($user);
        
         $admin = new User();
         $admin->setUsername('scott');
         //$admin->setPassword($this->encodePassword($admin, 'karenpass'));
         $admin->setPlainPassword('scottpass');
-        $admin->setApiToken('DkE3KWIXPt6bnzZl6lcTt682WLhWYnLYjTeNyiZqgPJiHoEkjTtx03ECCnW1');
+        $admin->setApiToken('DkE3KWIXPt6bnzZl6lcTt682WLhWYnLYjTeNyiZqgPJiHoEkjTtx03ECCnWP');
+        $admin->setLocale('en_US');
         $admin->setRoles(array('ROLE_ADMIN'));
         $admin->setEmail('scott@onlinespaces.com');
+        $admin->setLastLogin(new \DateTime());
         $manager->persist($admin);
         
         // the queries aren't done until now

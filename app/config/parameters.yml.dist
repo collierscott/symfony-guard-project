@@ -21,6 +21,11 @@ parameters:
     #Google Site Id
     google_site_id: UA-XXXXX-X
     
+    #Google app information:
+    google_app_id: XXXXX
+    google_app_secret: XXXXXX
+    
+    
     #Facebook app information
     facebook_app_id:  XXXXX
     facebook_app_secret: XXXXX

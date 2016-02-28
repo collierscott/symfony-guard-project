@@ -19,7 +19,7 @@ services:
         arguments: ["%kernel.root_dir%"]
         tags:
             - { name: twig.extension }
-    
+        
     app_form_login_authenticator:
         class: AppBundle\Security\FormLoginAuthenticator
         arguments: ["@service_container", "@router"]
@@ -31,3 +31,7 @@ services:
     app_facebook_authenticator:
         class: AppBundle\Security\FacebookAuthenticator
         arguments: ["@service_container", "%facebook_app_id%", "%facebook_app_secret%", "@router"]
+        
+    app_google_authenticator:
+        class: AppBundle\Security\GoogleAuthenticator
+        arguments: ["@service_container", "%google_app_id%", "%google_app_secret%", "@router"]

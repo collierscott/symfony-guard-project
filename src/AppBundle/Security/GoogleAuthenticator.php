@@ -2,8 +2,8 @@
 
 namespace AppBundle\Security;
 
-use League\OAuth2\Client\Provider\Facebook;
-use League\OAuth2\Client\Provider\FacebookUser;
+use League\OAuth2\Client\Provider\Google;
+use League\OAuth2\Client\Provider\GoogleUser;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,13 +17,13 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use AppBundle\Entity\User;
 
-class FacebookAuthenticator extends AbstractGuardAuthenticator
+class GoogleAuthenticator extends AbstractGuardAuthenticator 
 {
     
     private $appId;
     private $appSecret;
     private $router;
-    private $facebookProvider;
+    private $provider;
     private $container;
     
     public function __construct(ContainerInterface $container, $appId, $appSecret, RouterInterface $router)
@@ -37,10 +37,11 @@ class FacebookAuthenticator extends AbstractGuardAuthenticator
     public function getCredentials(Request $request)
     {
         
-        if ($request->getPathInfo() != '/connect/facebook-check') {
+        if ($request->getPathInfo() != '/connect/google-check') {
             // skip authentication unless we're on this URL!
             return null;
         }
+        
         if ($code = $request->query->get('code')) {
             return $code;
         }
@@ -57,7 +58,7 @@ class FacebookAuthenticator extends AbstractGuardAuthenticator
     public function getUser($authorizationCode, UserProviderInterface $userProvider)
     {
         
-        $provider = $this->getFacebookOAuthProvider();
+        $provider = $this->getGoogleOAuthProvider();
         
         try {
             
@@ -78,14 +79,13 @@ class FacebookAuthenticator extends AbstractGuardAuthenticator
             
         }
         
-        $fbUser = $provider->getResourceOwner($accessToken);
-        $email = $fbUser->getEmail();
-        $facebookId = $fbUser->getId();
-        $gender = $fbUser->getGender();
-        $firstname = $fbUser->getFirstName();
-        $lastname = $fbUser->getLastname();
-        $locale = $fbUser->getLocale();
-        $name = $fbUser->getName();
+        $googleUser = $provider->getResourceOwner($accessToken);
+        
+        $email = $googleUser->getEmail();
+        $googleId = $googleUser->getId();
+        $firstname = $googleUser->getFirstname();
+        $lastname = $googleUser->getLastname();
+        $displayName = $googleUser->getName();
 
         $em = $this->container            
             ->get('doctrine')
@@ -102,16 +102,14 @@ class FacebookAuthenticator extends AbstractGuardAuthenticator
             $user = new User();
             $user->setUsername($email);
             $user->setEmail($email);
-            
-            $user->setGender($gender);
-            $user->setFirstname($firstname);
             $user->setLastname($lastname);
-            $user->setLocale($locale);
-            $user->setFacebookName($name);
-
+            $user->setFirstname($firstname);
+            $user->setGoogleDisplayName($displayName);
+            $user->setLocale('en_US');
+            
             //Set to unencoded password. 
             //Since passwords are encode when checked, users should not be able to login using it
-            $user->setPassword('FACEBOOK LOGIN');
+            $user->setPassword('GOOGLE LOGIN');
             
             //Make sure that a user has at least the role of ROLE_USER when created
 	        $roles = $user->getRoles();
@@ -120,12 +118,12 @@ class FacebookAuthenticator extends AbstractGuardAuthenticator
         }
         
         $user->setLastLogin(new \DateTime());
-        $user->setFacebookId($facebookId);
+        $user->setGoogleId($googleId);
         $em->persist($user);
         $em->flush();
 
         return $user;
-            
+        
     }
     
     public function checkCredentials($credentials, UserInterface $user)
@@ -143,15 +141,13 @@ class FacebookAuthenticator extends AbstractGuardAuthenticator
     
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-
         $targetPath = $request->getSession()->get('_security.' . $providerKey . '.target_path');
         
         if (!$targetPath) {
             $targetPath = $this->router->generate('homepage');
         }
         
-        return new RedirectResponse($targetPath);
-        
+        return new RedirectResponse($targetPath);    
     }
     
     public function supportsRememberMe()
@@ -169,35 +165,34 @@ class FacebookAuthenticator extends AbstractGuardAuthenticator
      */
     public function start(Request $request, AuthenticationException $authException = null)
     {
-        $authUrl = $this->getFacebookOAuthProvider()->getAuthorizationUrl([
+        $authUrl = $this->getGoogleOAuthProvider()->getAuthorizationUrl([
             // these are actually the default copes
             'scopes' => ['public_profile', 'email'],
         ]);
-        return new RedirectResponse($authUrl);
+        return new RedirectResponse($authUrl);  
     }
     
     /**
-     * @return Facebook
+     * @return Google
      */
-    private function getFacebookOAuthProvider()
+    private function getGoogleOAuthProvider()
     {
         
-        if ($this->facebookProvider === null) {
-            
-            $this->facebookProvider = new Facebook(array(
+        if ($this->provider === null) {
+
+            $this->provider = new Google(array(
                 'clientId' => $this->appId,
                 'clientSecret' => $this->appSecret,
                 'redirectUri' => $this->router->generate(
-                    'connect_facebook_check',
+                    'connect_google_check',
                     [],
                     RouterInterface::ABSOLUTE_URL
-                ),
-                'graphApiVersion' => 'v2.3',
+                )
             ));
             
         }
         
-        return $this->facebookProvider;
+        return $this->provider;
         
     }
     

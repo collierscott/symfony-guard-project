@@ -54,8 +54,8 @@ class RegistrationControllerTest extends WebTestCase
         
         $crawler = $client->submit($form);
         
-        //var_dump($client->getResponse());
-        
+        //var_dump($client);
+
         $this->assertTrue($client->getResponse()->isRedirect());
         
         $client->followRedirect();

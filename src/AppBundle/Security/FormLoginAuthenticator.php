@@ -2,17 +2,17 @@
 
 namespace AppBundle\Security;
 
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
+use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Security\Core\Security;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class FormLoginAuthenticator extends AbstractGuardAuthenticator
 {
@@ -50,7 +50,7 @@ class FormLoginAuthenticator extends AbstractGuardAuthenticator
         if ($request->getPathInfo() != '/login_check') {
             return;
         }
-
+        
         $username = $request->request->get('_username');
         $request->getSession()->set(Security::LAST_USERNAME, $username);
         $password = $request->request->get('_password');
@@ -70,13 +70,21 @@ class FormLoginAuthenticator extends AbstractGuardAuthenticator
         
         $username = $credentials['username'];
         
-        $userRepo = $this->container
+        $em = $this->container
             ->get('doctrine')
-            ->getManager()
+            ->getManager();
+        
+        $userRepo = $em
             ->getRepository('AppBundle:User');
             
-            $user =  $userRepo->loadUserByUsername($username);
-
+        $user = $userRepo->loadUserByUsername($username);
+        
+        if($user) {
+            $user->setLastLogin(new \DateTime());
+            $em->persist($user);
+            $em->flush();
+        }
+        
         return $user;
         
     }
@@ -91,12 +99,12 @@ class FormLoginAuthenticator extends AbstractGuardAuthenticator
         $plainPassword = $credentials['password'];
         
         $encoder = $this->container->get('security.password_encoder');
-        
+
         if (!$encoder->isPasswordValid($user, $plainPassword)) {
             // throw any AuthenticationException
             throw new BadCredentialsException();
         }
-        
+
         // return true to make authentication successful
         return true;
         
@@ -120,6 +128,7 @@ class FormLoginAuthenticator extends AbstractGuardAuthenticator
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey){
         $url = $this->router->generate('homepage');
         return new RedirectResponse($url);
+
     }
 
     /**

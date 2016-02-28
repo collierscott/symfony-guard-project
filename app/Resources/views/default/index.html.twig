@@ -1,36 +1,9 @@
 {% extends 'base.html.twig' %}
-
 {% block body %}
-    <header role="banner">
-        <nav role="navigation" class="navbar navbar-static-top navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="{{ path('homepage') }}">Template</a>
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="{{ path('homepage') }}"><i class="fa fa-home"></i>Home</a></li>
-                        <li>
-                            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                                <a href="{{ path('logout') }}">Logout</a>
-                            {% else %}
-                                <a href="{{ path('login_action') }}">Login</a>
-                            {% endif %}
-                        </li>
-                    </ul>
-                </div><!--/.nav-collapse -->
-            </div>
-        </nav>
-    </header>
     <div id="wrapper" class="container-fluid">
         <div id="container">
             <div id="welcome">
-                <h1><span>Welcome to</span> Symfony {{ constant('Symfony\\Component\\HttpKernel\\Kernel::VERSION') }}</h1>
+                <h1><span>Welcome to</span> Onlinespaces Bootstrap using Symfony {{ constant('Symfony\\Component\\HttpKernel\\Kernel::VERSION') }}</h1>
             </div>
             <div id="status">
                 <p>
@@ -41,9 +14,8 @@
                     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                         <a class="btn btn-primary pull-right" href="{{ path('logout') }}">Logout</a>
                     {% else %}
-                        <a class="btn btn-primary pull-right" href="{{ path('login_action') }}">Login</a>
-                        <a class="btn btn-primary pull-right" href="{{ path('connect_facebook') }}">Login with Facebook</a>
-                        <a class="btn btn-primary pull-right" href="{{ path('user_register') }}">Register</a>
+                        <a class="btn btn-primary" href="{{ path('login_action') }}">Login</a>
+                        {% include 'security/_login_buttons.html.twig' %}
                     {% endif %}
                 </p>
             </div>

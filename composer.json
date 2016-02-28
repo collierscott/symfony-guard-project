@@ -29,7 +29,8 @@
         "behat/behat": "dev-master@dev",
         "stof/doctrine-extensions-bundle": "dev-master@dev",
         "league/oauth2-client": "~1.0@dev",
-        "league/oauth2-facebook": "^1.1"
+        "league/oauth2-facebook": "^1.1",
+        "league/oauth2-google": "^1.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

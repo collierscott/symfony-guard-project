@@ -17,7 +17,6 @@ class SecurityController extends Controller
     public function loginAction(Request $request)
     {
         
-        //\Doctrine\Common\Util\Debug::dump($this->getDoctrine()->getEntityManager()->find('AppBundle:User', 4));
         $authenticationUtils = $this->get('security.authentication_utils');
 
         // get the login error if there is one

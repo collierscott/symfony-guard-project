@@ -29,9 +29,10 @@ class RegistrationController extends Controller
         if ($form->isValid()) {
 
             $data = $form->getData();
-            $user->setRoles(array('ROLE_USER'));
 
             $em = $this->getDoctrine()->getManager();
+            $user->setLocale('en_US');
+            $user->setLastLogin(new \DateTime());
             $em->persist($user);
             $em->flush();
             

@@ -6,7 +6,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Onlinespaces Bootstrap{% endblock %}</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -39,10 +39,25 @@
              js.src = "//connect.facebook.net/en_US/sdk.js";
              fjs.parentNode.insertBefore(js, fjs);
            }(document, 'script', 'facebook-jssdk'));
-        </script>
+        </script>    
+        <div id="top-navbar" class="container">
+            {% include 'AppBundle:Navigation:_top_navigation.html.twig' %}
+        </div>
         {% block body %}{% endblock %}
-        <footer class="container-fluid">
-            <p>Copyright &copy; Company 2015</p>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div
+                        class="fb-like"
+                        data-share="true"
+                        data-width="450"
+                        data-show-faces="true">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="container">
+            <p class="pull-right">Copyright &copy; 2015 <a href="http://www.onlinespaces.com" target="_blank">Onlinespaces</a></p>
         </footer>
         {% block javascripts %}
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -52,12 +67,6 @@
             <script type="text/javascript" src="{{ asset('public/js/plugins.min.js'|asset_version) }}"></script>
             <script type="text/javascript" src="{{ asset('public/js/main.min.js'|asset_version) }}"></script>
         {% endblock %}
-        <div
-          class="fb-like"
-          data-share="true"
-          data-width="450"
-          data-show-faces="true">
-        </div>
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
             (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
